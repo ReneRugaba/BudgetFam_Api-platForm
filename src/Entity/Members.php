@@ -38,7 +38,6 @@ class Members implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    #[Groups(['read','write'])]
     private $roles = [];
 
     /**

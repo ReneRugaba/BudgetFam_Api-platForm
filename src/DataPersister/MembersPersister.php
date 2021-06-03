@@ -13,7 +13,7 @@ Class MembersPersister implements DataPersisterInterface{
     private EntityManagerInterface $entityManagerInterface;
     private UserPasswordHasherInterface $userPasswordEncoderInterface;
 
-    public function __construct(EntityManagerInterface $entityManagerInterface,UserPasswordHasherInterface $userPasswordEncoderInterface)
+    public function __construct(EntityManagerInterface $entityManagerInterface,UserPasswordHasherInterface $userPasswordHasherInterface)
     {
         $this->entityManagerInterface=$entityManagerInterface;
         $this->userPasswordEncoderInterface=$userPasswordEncoderInterface;
@@ -29,8 +29,10 @@ Class MembersPersister implements DataPersisterInterface{
     */
    public function persist($data){
 
-    if($data->getPassword() ){
-        $data->setPassword($this->userPasswordEncoderInterface->hashPassword(new Members(),$data->getPassword()));
+    if($data->getPassword() && $data->getPassword()!=null ){
+        $data->setPassword($this->userPasswordHasherInterface->hashPassword(new Members(),$data->getPassword()));
+    }else{
+        $data->setPassword(null);
     }
     $this->entityManagerInterface->persist($data);
     $this->entityManagerInterface->flush();
@@ -40,7 +42,8 @@ Class MembersPersister implements DataPersisterInterface{
     * Removes the data.
     */
    public function remove($data){
-
+    $this->entityManagerInterface->remove($data);
+    $this->entityManagerInterface->flush();
    }
 
 }

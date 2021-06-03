@@ -5,11 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RevenusRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=RevenusRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:['groups'=>['read']],
+    denormalizationContext:['groups'=>['write']]
+    )]
 class Revenus
 {
     /**
@@ -17,22 +21,26 @@ class Revenus
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['read'])]
     private $id;
 
     /**
      * @ORM\Column(type="float")
      */
+    #[Groups(['read','write'])]
     private $Montant;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['read','write'])]
     private $dateReception;
 
     /**
      * @ORM\ManyToOne(targetEntity=TypesRevenus::class, inversedBy="revenus")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['read'])]
     private $typesRevenus;
 
     /**

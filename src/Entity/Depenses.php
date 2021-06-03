@@ -5,11 +5,15 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\DepensesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DepensesRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    normalizationContext:['groups'=>['read']],
+    denormalizationContext:['groups'=>['write']]
+    )]
 class Depenses
 {
     /**
@@ -17,21 +21,25 @@ class Depenses
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
+    #[Groups(['write'])]
     private $id;
 
     /**
      * @ORM\Column(type="float")
      */
+    #[Groups(['read','write'])]
     private $Montant;
 
     /**
      * @ORM\Column(type="datetime")
      */
+    #[Groups(['read','write'])]
     private $datePaiement;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
+    #[Groups(['read','write'])]
     private $beneficiaire;
 
 
@@ -39,6 +47,7 @@ class Depenses
      * @ORM\ManyToOne(targetEntity=CathegoriesDepenses::class, inversedBy="depenses")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['read'])]
     private $cathegoriesDepenses;
 
     /**
