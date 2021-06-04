@@ -34,6 +34,7 @@ class Members implements UserInterface
      */
     #[Groups(['read','write'])]
     private $email;
+    
 
     /**
      * @ORM\Column(type="json")
@@ -79,6 +80,16 @@ class Members implements UserInterface
         $this->depenses = new ArrayCollection();
         $this->revenus = new ArrayCollection();
         $this->SoldesRevenusDepenses = new ArrayCollection();
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
     }
 
     public function getId(): ?int

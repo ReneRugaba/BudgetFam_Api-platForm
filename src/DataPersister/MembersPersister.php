@@ -4,19 +4,18 @@ namespace App\DataPersister;
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\Members;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 
 Class MembersPersister implements DataPersisterInterface{
 
     private EntityManagerInterface $entityManagerInterface;
-    private UserPasswordHasherInterface $userPasswordEncoderInterface;
+    private UserPasswordHasherInterface $userPasswordHasherInterface;
 
     public function __construct(EntityManagerInterface $entityManagerInterface,UserPasswordHasherInterface $userPasswordHasherInterface)
     {
         $this->entityManagerInterface=$entityManagerInterface;
-        $this->userPasswordEncoderInterface=$userPasswordEncoderInterface;
+        $this->userPasswordHasherInterface=$userPasswordHasherInterface;
     }
    public function supports($data): bool{
         return $data instanceof Members;
