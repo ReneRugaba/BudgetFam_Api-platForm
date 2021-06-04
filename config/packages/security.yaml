@@ -19,7 +19,7 @@ security:
             anonymous: true
             provider: app_user_provider
             json_login:
-                check_path: /api/login
+                check_path: /authentication_token
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -38,6 +38,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/api/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: POST } 
+        - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: POST } 
         - { path: ^/api/members, roles: IS_AUTHENTICATED_ANONYMOUSLY,methods: POST }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }

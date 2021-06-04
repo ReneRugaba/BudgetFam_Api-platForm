@@ -1,8 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-login:
-  path: /api/login
+authentication_token:
+  path: /authentication_token
   methods: ['POST']
 members:
   path: /api/members
