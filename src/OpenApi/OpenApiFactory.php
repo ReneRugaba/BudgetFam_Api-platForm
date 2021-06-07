@@ -27,7 +27,8 @@ class OpenApiFactory implements OpenApiFactoryInterface
         //     ))
         // ));
 
-        $openApi = $openApi->withInfo((new Model\Info('Budget-fam_Api-Platform', 'v1.0.0', "Il s'agit d'une API permettant de gérer le budget familial et qui sera consommé par une application cliente vis à des requêtes Http."))->withExtensionProperty('info-key', 'Info value'));
+        $openApi = $openApi->withInfo((new Model\Info('Budget-fam_Api-Platform', 'v1.0.0', "It is an API allowing to manage the family budget  and be consume by client application Http requests."))
+                            ->withExtensionProperty('info-key', 'Info value'));
         $openApi = $openApi->withExtensionProperty('key', 'Custom x-key value');
         $openApi = $openApi->withExtensionProperty('x-value', 'Custom x-value value');
 
