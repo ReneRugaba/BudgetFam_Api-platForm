@@ -7,3 +7,9 @@ authentication_token:
 members:
   path: /api/members
   methods: ['POST']
+homepage:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /api/docs
+        permanent: true
