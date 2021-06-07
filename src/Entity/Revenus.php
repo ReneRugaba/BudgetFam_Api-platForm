@@ -47,6 +47,7 @@ class Revenus
      * @ORM\ManyToOne(targetEntity=Members::class, inversedBy="revenus")
      * @ORM\JoinColumn(nullable=false)
      */
+    #[Groups(['read'])]
     private $members;
 
     public function getId(): ?int

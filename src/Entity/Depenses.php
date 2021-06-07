@@ -47,7 +47,7 @@ class Depenses
      * @ORM\ManyToOne(targetEntity=CathegoriesDepenses::class, inversedBy="depenses")
      * @ORM\JoinColumn(nullable=false)
      */
-    #[Groups(['read'])]
+    #[Groups(['read','write'])]
     private $cathegoriesDepenses;
 
     /**

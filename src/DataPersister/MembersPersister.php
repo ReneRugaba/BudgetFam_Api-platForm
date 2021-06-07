@@ -3,6 +3,7 @@ namespace App\DataPersister;
 
 use ApiPlatform\Core\DataPersister\DataPersisterInterface;
 use App\Entity\Members;
+use App\Service\Mailer;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -12,7 +13,7 @@ Class MembersPersister implements DataPersisterInterface{
     private EntityManagerInterface $entityManagerInterface;
     private UserPasswordHasherInterface $userPasswordHasherInterface;
 
-    public function __construct(EntityManagerInterface $entityManagerInterface,UserPasswordHasherInterface $userPasswordHasherInterface)
+    public function __construct(EntityManagerInterface $entityManagerInterface,UserPasswordHasherInterface $userPasswordHasherInterface,private Mailer $serviceMailer)
     {
         $this->entityManagerInterface=$entityManagerInterface;
         $this->userPasswordHasherInterface=$userPasswordHasherInterface;
@@ -32,6 +33,13 @@ Class MembersPersister implements DataPersisterInterface{
         $data->setPassword($this->userPasswordHasherInterface->hashPassword(new Members(),$data->getPassword()));
     }else{
         $data->setPassword(null);
+    }
+
+    if ($data->getId()===null) {
+        //send email
+        $subject="Mail registration";
+        $templete='email/registration.html.twig';
+        $this->serviceMailer->sendMail($data,$subject,$templete);
     }
     $this->entityManagerInterface->persist($data);
     $this->entityManagerInterface->flush();
