@@ -22,6 +22,16 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+    
+    offer.search_filter:
+        parent: 'api_platform.doctrine.orm.search_filter'
+        tags:  [ 'api_platform.filter' ]
+        arguments: [ { email: ~ } ]
+        # The following are mandatory only if a _defaults section is defined with inverted values.
+        # You may want to isolate filters in a dedicated file to avoid adding the following lines (by adding them in the defaults section)
+        autowire: false
+        autoconfigure: false
+        public: false
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

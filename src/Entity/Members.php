@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\MembersRepository;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use App\Controller\MembersAccount;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,8 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 #[ApiResource(
                 normalizationContext:['groups'=>['read']],
-                denormalizationContext:['groups'=>['write']]
+                denormalizationContext:['groups'=>['write']],
                 )]
+#[ApiFilter(SearchFilter::class,properties:["email"=>"exact"])]
 class Members implements UserInterface
 {
     /**
